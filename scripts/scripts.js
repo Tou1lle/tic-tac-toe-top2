@@ -27,14 +27,31 @@ function GameBoard() {
         console.log(`${board[6].getMark()} | ${board[7].getMark()} | ${board[8].getMark()}`);
     }
 
-    function hasEmptyCell() {
-        return board.some((cell) => cell.getMark === "");
+    function checkEmptyCell() {
+        return board.some( cell => cell.getMark() === "");
+    }
+
+    function checkWon() {
+        let ended = false;
+
+        winnigIndexes.forEach(winningArr => {
+            const firstMark = board[winningArr[0]];
+            const secondMark = board[winningArr[1]];
+            const thirdMark = board[winningArr[2]];
+            
+            if (firstMark.getMark() !== "" 
+                && firstMark.getMark() === secondMark.getMark() 
+                && firstMark.getMark() === thirdMark.getMark()) ended = true;
+        });
+
+        return ended;
     }
 
     return {
         putMark,
         printBoard,
-        hasEmptyCell,
+        checkEmptyCell,
+        checkWon,
     }
 }
 

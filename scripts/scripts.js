@@ -121,6 +121,7 @@ function GameController() {
     const gameBoard = GameBoard();
     const player1 = Player();
     const player2 = Player();
+    let gameEnded = false;
 
     player1.setMark("X");
     player1.setName(`Player 1: ${player1.getMark()}`);
@@ -152,10 +153,18 @@ function GameController() {
             return;
         }
 
+        if (gameEnded) {
+            console.log("Game already ended!");
+            return;
+        }
+
         gameBoard.putMark(index, getActivePlayer().getMark());
 
         if (gameBoard.checkWon() || !(gameBoard.checkEmptyCell())) {
+            gameBoard.printBoard();
             console.log(`${getActivePlayer().getName()} has won the game!`);
+            gameEnded = true;
+            return;
         }
 
         switchPlayer();

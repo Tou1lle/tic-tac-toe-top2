@@ -41,3 +41,10 @@ main {
     font: var(--player-font);
     text-align: center;
 }
+
+.cell {
+    border: 1px solid;
+    cursor: pointer;
+    font-size: large;
+    font-weight: bold;
+}

@@ -116,6 +116,7 @@ function Player() {
 
 /**
  * GameController controls the flow of the game
+ * @return GameController object 
  */
 function GameController() {
     const gameBoard = GameBoard();
@@ -126,7 +127,7 @@ function GameController() {
     player1.setMark("X");
     player1.setName(`Player 1: ${player1.getMark()}`);
 
-    player2.setMark("Y");
+    player2.setMark("0");
     player2.setName(`Player 2: ${player2.getMark()}`);
 
     const players = [];
@@ -145,6 +146,10 @@ function GameController() {
     function printNewRound() {
         gameBoard.printBoard();
         console.log(`In Turn: ${getActivePlayer().getName()}`);
+    }
+
+    function hasEnded() {
+        return gameEnded;
     }
 
     function playRound(index) {
@@ -176,6 +181,47 @@ function GameController() {
     return {
         getActivePlayer,
         playRound,
+        hasEnded,
         getBoard: gameBoard.getBoard,
     }
 }
+
+/**
+ * 
+ */
+function ScreenController() {
+    const game = GameController();
+    const boardDiv = document.querySelector(".game-board");
+
+    function updateScreen() {
+        boardDiv.textContent = "";
+
+        const currentBoard = game.getBoard();
+        const currentPlayer = game.getActivePlayer();
+
+        currentBoard.forEach((cell, index) => {
+            const cellButton = document.createElement("button");
+            cellButton.classList.add("cell");
+
+            cellButton.dataset.index = index;
+            cellButton.textContent = cell.getMark();
+
+            boardDiv.appendChild(cellButton);
+        });
+
+        if (game.hasEnded()) {
+            document.querySelectorAll("button").forEach(button => button.disabled = true);
+        }
+    }
+
+    boardDiv.addEventListener("click", event => {
+        const clickedCell = event.target.dataset.index;
+
+        game.playRound(clickedCell);
+        updateScreen();
+    });
+
+    updateScreen();
+}
+
+ScreenController();

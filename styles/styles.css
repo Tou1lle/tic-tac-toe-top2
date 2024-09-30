@@ -1,0 +1,43 @@
+:root {
+    --header-font: 1.5rem "Trebuchet MS", sans-serif;
+    --player-font: 2rem "Trebuchet MS", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    font: var(--header-font);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    justify-content: space-evenly;
+}
+
+.game-board-container {
+    display: flex;
+    justify-content: center;
+    flex: 4;
+}
+
+.game-board {
+    height: 600px;
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 1px solid black;
+}
+
+.player {
+    flex: 1;
+    font: var(--player-font);
+    text-align: center;
+}

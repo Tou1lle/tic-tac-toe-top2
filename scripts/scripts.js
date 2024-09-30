@@ -1,6 +1,7 @@
 /**
  * Gameboard represent the actual board
- * Gameboard will contain Cells
+ * Gameboard will contain Cells -> Cells will contain marks X/O
+ * @returns GameBoard object
  */
 function GameBoard() {
     const winnigIndexes = [
@@ -17,7 +18,7 @@ function GameBoard() {
     }
 
     function putMark(index, playerMark) {
-        if (board[index].getMark() !== "") return;
+        if (board[index].getMark() !== "") return true;
         board[index].setMark(playerMark);
     }
 
@@ -47,14 +48,23 @@ function GameBoard() {
         return ended;
     }
 
+    function getBoard() {
+        return board;
+    }
+
     return {
         putMark,
         printBoard,
         checkEmptyCell,
         checkWon,
+        getBoard,
     }
 }
 
+/**
+ * A Cell represents a place where players can put their marks
+ * @returns Cell object
+ */
 function Cell() {
     let mark = "";
 
@@ -72,6 +82,10 @@ function Cell() {
     }
 }
 
+/**
+ * A player will contain a certain mark and name for displaying
+ * @returns Player object
+ */
 function Player() {
     let mark = "";
     let name = "";
@@ -97,5 +111,62 @@ function Player() {
         setName,
         getMark,
         getName,
+    }
+}
+
+/**
+ * GameController controls the flow of the game
+ */
+function GameController() {
+    const gameBoard = GameBoard();
+    const player1 = Player();
+    const player2 = Player();
+
+    player1.setMark("X");
+    player1.setName(`Player 1: ${player1.getMark()}`);
+
+    player2.setMark("Y");
+    player2.setName(`Player 2: ${player2.getMark()}`);
+
+    const players = [];
+    players.push(player1, player2);
+
+    let activePlayer = players[0];
+
+    function switchPlayer() {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    }
+
+    function getActivePlayer() {
+        return activePlayer;
+    }
+
+    function printNewRound() {
+        gameBoard.printBoard();
+        console.log(`In Turn: ${getActivePlayer().getName()}`);
+    }
+
+    function playRound(index) {
+        if (gameBoard.putMark(index, getActivePlayer().getMark())) {
+            console.log("This place is already occupied!");
+            return;
+        }
+
+        gameBoard.putMark(index, getActivePlayer().getMark());
+
+        if (gameBoard.checkWon() || !(gameBoard.checkEmptyCell())) {
+            console.log(`${getActivePlayer().getName()} has won the game!`);
+        }
+
+        switchPlayer();
+        printNewRound();
+    }
+
+    printNewRound();
+
+    return {
+        getActivePlayer,
+        playRound,
+        getBoard: gameBoard.getBoard,
     }
 }

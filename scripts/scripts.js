@@ -125,10 +125,10 @@ function GameController() {
     let gameEnded = false;
 
     player1.setMark("X");
-    player1.setName(`Player 1: ${player1.getMark()}`);
+    player1.setName("Player 1");
 
     player2.setMark("O");
-    player2.setName(`Player 2: ${player2.getMark()}`);
+    player2.setName("Player 2");
 
     const players = [];
     players.push(player1, player2);
@@ -145,11 +145,15 @@ function GameController() {
 
     function printNewRound() {
         gameBoard.printBoard();
-        console.log(`In Turn: ${getActivePlayer().getName()}`);
+        console.log(`In Turn: ${getActivePlayer().getName()}: ${getActivePlayer().getMark()}`);
     }
 
     function hasEnded() {
         return gameEnded;
+    }
+
+    function getPlayers() {
+        return players;
     }
 
     function playRound(index) {
@@ -188,6 +192,7 @@ function GameController() {
         getActivePlayer,
         playRound,
         hasEnded,
+        getPlayers,
         getBoard: gameBoard.getBoard,
     }
 }
@@ -198,6 +203,7 @@ function GameController() {
 function ScreenController() {
     const game = GameController();
     const boardDiv = document.querySelector(".game-board");
+    const playersDiv = document.querySelectorAll(".player")
 
     function updateScreen() {
         boardDiv.textContent = "";
@@ -220,6 +226,14 @@ function ScreenController() {
         }
     }
 
+    function displayPlayers() {
+        const players = game.getPlayers();
+
+        players.forEach((player, index) => {
+            playersDiv[index].textContent = `${player.getName()}: ${player.getMark()}`;
+        });
+    }
+
     boardDiv.addEventListener("click", event => {
         const clickedCell = event.target.dataset.index;
 
@@ -228,6 +242,7 @@ function ScreenController() {
     });
 
     updateScreen();
+    displayPlayers()
 }
 
 ScreenController();

@@ -127,7 +127,7 @@ function GameController() {
     player1.setMark("X");
     player1.setName(`Player 1: ${player1.getMark()}`);
 
-    player2.setMark("0");
+    player2.setMark("O");
     player2.setName(`Player 2: ${player2.getMark()}`);
 
     const players = [];
@@ -165,9 +165,15 @@ function GameController() {
 
         gameBoard.putMark(index, getActivePlayer().getMark());
 
-        if (gameBoard.checkWon() || !(gameBoard.checkEmptyCell())) {
+        if (gameBoard.checkWon()) {
             gameBoard.printBoard();
             console.log(`${getActivePlayer().getName()} has won the game!`);
+            gameEnded = true;
+            return;
+        }
+
+        if (!(gameBoard.checkEmptyCell())) {
+            console.log("Game ended in draw");
             gameEnded = true;
             return;
         }

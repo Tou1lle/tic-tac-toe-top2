@@ -28,12 +28,12 @@ main {
 }
 
 .game-board {
-    height: 600px;
-    width: 600px;
+    height: 400px;
+    width: 400px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    border: 1px solid black;
+    border: 3px solid black;
 }
 
 .player {
@@ -47,4 +47,8 @@ main {
     cursor: pointer;
     font-size: large;
     font-weight: bold;
+    font-size: 4rem;
+    border: 2px solid black;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: bolder;
 }

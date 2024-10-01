@@ -207,6 +207,7 @@ function GameController() {
 
     function restartGame() {
         gameBoard.clearBoard();
+        gameEnded = false;
         activePlayer = player1;
     }
 
@@ -233,6 +234,7 @@ function ScreenController() {
     const playersDiv = document.querySelectorAll(".player")
     const changeNameBtns = document.querySelectorAll(".change-name-btn");
     const restartBtn = document.querySelector(".restart-button");
+    const winnerDiv = document.querySelector(".winner");
 
     function updateScreen() {
         boardDiv.textContent = "";
@@ -255,11 +257,11 @@ function ScreenController() {
         }
 
         if (game.getWinner()) {
-            document.querySelector(".winner").textContent = `${currentPlayer.getName()} has won!`;
+            winnerDiv.textContent = `${currentPlayer.getName()} has won!`;
         }
 
         if (game.getDraw()) {
-            document.querySelector(".winner").textContent = "Game ended in draw!";
+            winnerDiv.textContent = "Game ended in draw!";
         }
     }
 
@@ -295,6 +297,7 @@ function ScreenController() {
     restartBtn.addEventListener("click", () => {
         game.restartGame();
         updateScreen();
+        winnerDiv.textContent = "";
     });
 
     updateScreen();

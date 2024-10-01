@@ -48,6 +48,8 @@ main {
 
 .player {
     font: var(--player-font);
+    word-wrap: break-word;
+    max-width: 200px;
 }
 
 button[class="change-name-btn"] {

@@ -123,6 +123,8 @@ function GameController() {
     const player1 = Player();
     const player2 = Player();
     let gameEnded = false;
+    let gameWinner = false;
+    let gameDraw = false;
 
     player1.setMark("X");
     player1.setName("Player 1");
@@ -156,6 +158,14 @@ function GameController() {
         return players;
     }
 
+    function getWinner() {
+        return gameWinner;
+    }
+
+    function getDraw() {
+        return gameDraw;
+    }
+
     function playRound(index) {
         if (gameBoard.putMark(index, getActivePlayer().getMark())) {
             console.log("This place is already occupied!");
@@ -173,12 +183,14 @@ function GameController() {
             gameBoard.printBoard();
             console.log(`${getActivePlayer().getName()} has won the game!`);
             gameEnded = true;
+            gameWinner = true;
             return;
         }
 
         if (!(gameBoard.checkEmptyCell())) {
             console.log("Game ended in draw");
             gameEnded = true;
+            gameDraw = true;
             return;
         }
 
@@ -193,6 +205,8 @@ function GameController() {
         playRound,
         hasEnded,
         getPlayers,
+        getDraw,
+        getWinner,
         getBoard: gameBoard.getBoard,
     }
 }
@@ -222,7 +236,15 @@ function ScreenController() {
         });
 
         if (game.hasEnded()) {
-            document.querySelectorAll("button").forEach(button => button.disabled = true);
+            document.querySelectorAll(".cell").forEach(button => button.disabled = true);
+        }
+
+        if (game.getWinner()) {
+            document.querySelector(".winner").textContent = `${currentPlayer.getName()} has won!`;
+        }
+
+        if (game.getDraw()) {
+            document.querySelector(".winner").textContent = "Game ended in draw!";
         }
     }
 

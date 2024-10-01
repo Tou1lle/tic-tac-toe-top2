@@ -1,6 +1,7 @@
 :root {
     --header-font: 1.5rem "Trebuchet MS", sans-serif;
     --player-font: 2rem "Trebuchet MS", sans-serif;
+    --button-font: 1.5rem "Trebuchet MS", sans-serif;
 }
 
 body {
@@ -24,7 +25,7 @@ main {
 .game-board-container {
     display: flex;
     justify-content: center;
-    flex: 4;
+    flex: 3;
 }
 
 .game-board {
@@ -36,8 +37,42 @@ main {
     border: 3px solid black;
 }
 
-.player {
+.player-container {
     flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.player {
+    font: var(--player-font);
+}
+
+button[class="change-name-btn"] {
+    margin-top: 1em;
+    font: var(--button-font);
+    width: 60%;
+}
+
+.result-container {
+    height: 150px;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.result-container > * {
+    display: flex;
+    justify-content: center;
+}
+
+button[class*="restart"] {
+    font: var(--button-font);
+    height: 70%;
+}
+
+.winner {
     font: var(--player-font);
     text-align: center;
 }

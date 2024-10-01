@@ -208,6 +208,7 @@ function GameController() {
     function restartGame() {
         gameBoard.clearBoard();
         gameEnded = false;
+        gameWinner = false;
         activePlayer = player1;
     }
 

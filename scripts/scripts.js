@@ -218,6 +218,7 @@ function ScreenController() {
     const game = GameController();
     const boardDiv = document.querySelector(".game-board");
     const playersDiv = document.querySelectorAll(".player")
+    const changeNameBtns = document.querySelectorAll(".change-name-btn");
 
     function updateScreen() {
         boardDiv.textContent = "";
@@ -261,6 +262,20 @@ function ScreenController() {
 
         game.playRound(clickedCell);
         updateScreen();
+    });
+
+    changeNameBtns.forEach(button => {
+        button.addEventListener("click", event => {
+            const newName = prompt("What is your new name?", "Sigma");
+
+            if (event.target === changeNameBtns[0]) {
+                playersDiv[0].textContent = newName + `: ${game.getPlayers()[0].getMark()}`;
+                game.getPlayers()[0].setName(newName);
+            } else {
+                playersDiv[1].textContent = newName + `: ${game.getPlayers()[0].getMark()}`;
+                game.getPlayers()[1].setName(newName);
+            }
+        })
     });
 
     updateScreen();

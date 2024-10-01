@@ -52,12 +52,19 @@ function GameBoard() {
         return board;
     }
 
+    function clearBoard() {
+        board.forEach(cell => {
+            cell.setMark("");
+        });
+    }
+
     return {
         putMark,
         printBoard,
         checkEmptyCell,
         checkWon,
         getBoard,
+        clearBoard,
     }
 }
 
@@ -198,6 +205,11 @@ function GameController() {
         printNewRound();
     }
 
+    function restartGame() {
+        gameBoard.clearBoard();
+        activePlayer = player1;
+    }
+
     printNewRound();
 
     return {
@@ -207,6 +219,7 @@ function GameController() {
         getPlayers,
         getDraw,
         getWinner,
+        restartGame,
         getBoard: gameBoard.getBoard,
     }
 }
@@ -219,6 +232,7 @@ function ScreenController() {
     const boardDiv = document.querySelector(".game-board");
     const playersDiv = document.querySelectorAll(".player")
     const changeNameBtns = document.querySelectorAll(".change-name-btn");
+    const restartBtn = document.querySelector(".restart-button");
 
     function updateScreen() {
         boardDiv.textContent = "";
@@ -276,6 +290,11 @@ function ScreenController() {
                 game.getPlayers()[1].setName(newName);
             }
         })
+    });
+
+    restartBtn.addEventListener("click", () => {
+        game.restartGame();
+        updateScreen();
     });
 
     updateScreen();
